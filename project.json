@@ -12,6 +12,9 @@
 
     "jsList" : [
         "src/resource.js",
+        "src/brick.js",
+        "src/ball.js",
+        "src/pad.js",
         "src/app.js"
     ]
 }
