@@ -47,10 +47,7 @@ var Ball = cc.Class.extend({
         var padBoundingBox = pad.getBoundingBox();
         // Checks for ball vs pad
         if (cc.rectIntersectsRect(padBoundingBox, ballBoundingBox)) {
-            // TODO: detect where in the pad the collision occurs
-            // a. Over the pad, reflects angle
-            // b. Sides of the pad, adjust angle
-            this._directionY = 1;
+            this._directionY = 1; // TODO: detect where in the pad the collision occurs...
             return;
         }
 
@@ -58,10 +55,7 @@ var Ball = cc.Class.extend({
         for (var i = 0; i < bricks.length; i++) {
             var brickBoundingBox = bricks[i].getBoundingBox();
             if (cc.rectIntersectsRect(brickBoundingBox, ballBoundingBox)) {
-                // TODO: detect where in the brick the collision occurs...
-                // a. Below the brick, reflects angle
-                // b. Sides of the brick, adjust angle
-                this._directionY = -1;
+                this._directionY = -1; // TODO: detect where in the brick the collision occurs...
                 bricks[i].destroy();
                 bricks.splice(i, 1);
                 this.increaseSpeed();

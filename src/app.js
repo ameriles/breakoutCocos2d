@@ -2,12 +2,11 @@ var InGameSpriteLayer = cc.Layer.extend({
     _pad: null,
     _ball: null,
     _bricks: null,
-    _touchListener: null,
 
     ctor: function() {
         this._super();
     },
-    
+
     init: function() {
         // create bricks
         _bricks = [];
@@ -21,47 +20,58 @@ var InGameSpriteLayer = cc.Layer.extend({
 
         // create pad
         _pad = new Pad(this);
-        // end pad
 
         // create ball
         _ball = new Ball(this);
-        // end ball
 
-        //if ('touches' in cc.sys.capabilities) {
-            _touchListener = cc.EventListener.create({
-                event: cc.EventListener.TOUCH_ONE_BY_ONE, //one click
-                swallowTouches: true, //is onTouch return true, stop event propagation
-                onTouchBegan: this.onTouchBegan, //callbacks
-                onTouchMoved: this.onTouchMoved
-            });
+        this.setupTouchListener();
 
-            cc.eventManager.addListener(_touchListener, this);
-        //}
+        this.scheduleUpdate();
     },
 
-    onTouchBegan: function(touch, event) { //touchbegan callback
+    setupTouchListener: function() {
+        var touchListener = cc.EventListener.create({
+            event: cc.EventListener.TOUCH_ONE_BY_ONE, //one click
+            swallowTouches: true, //is onTouch return true, stop event propagation
+            onTouchBegan: this.onTouchBegan,
+            onTouchMoved: this.onTouchMoved
+        });
 
-        cc.log("onTouchBegan");
+        cc.eventManager.addListener(touchListener, this);
+    },
+
+    onTouchBegan: function(touch, event) {
         return true;
     },
 
-    onTouchMoved: function(touch, event) { //touchmoved callback
+    onTouchMoved: function(touch, event) {
         cc.log(touch.getDelta());
-       
+
         var delta = touch.getDelta();
-       
         _pad.move(delta)
-       
+
         return true;
+    },
+
+    update: function(dt) {
+        _ball.checkBounds(this);
+    
+        _ball.checkCollisions(_bricks, _pad);
+    
+        _ball.update(dt);
     }
 });
 
 var InGameScene = cc.Scene.extend({
     onEnter: function() {
         this._super();
-        var layer = new InGameSpriteLayer();
-        layer.init();
-        
-        this.addChild(layer);
+
+        var backgroundLayer = new cc.LayerColor(new cc.Color(128, 128, 64, 255), cc.winSize.width, cc.winSize.height);
+        this.addChild(backgroundLayer);
+
+        var spriteLayer = new InGameSpriteLayer();
+        spriteLayer.init();
+
+        this.addChild(spriteLayer);
     }
 });

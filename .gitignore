@@ -9,6 +9,7 @@ frameworks/runtime-src/proj.android/obj/*
 frameworks/runtime-src/proj.android/bin/*
 frameworks/runtime-src/proj.android/gen/*
 frameworks/runtime-src/proj.android/libs/*/libcocos2djs.so
+simulator/android/*
 
 # from frameworks/js-bindings/cocos2d-x/.gitingore 
 # Ignore files build by Visual Studio
