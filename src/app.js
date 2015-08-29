@@ -8,10 +8,17 @@ var InGameSpriteLayer = cc.Layer.extend({
     },
 
     init: function() {
+        var centerpos = cc.p(cc.winSize.width / 2, cc.winSize.height / 2);
+        var spritebg = new cc.Sprite(res.Background_jpg);
+        spritebg.setPosition(centerpos);
+        this.addChild(spritebg);
+        
+        var ROWS = 7;
+        var COLS = 10;
         // create bricks
         _bricks = [];
-        for (var i = 0; i < 12; i++) {
-            for (var j = 0; j < 5; j++) {
+        for (var i = 0; i < COLS; i++) {
+            for (var j = 0; j < ROWS; j++) {
                 var b = new Brick(this, j, i);
                 _bricks.push(b);
             }
@@ -23,6 +30,7 @@ var InGameSpriteLayer = cc.Layer.extend({
 
         // create ball
         _ball = new Ball(this);
+        _ball.setInitialPosition(_pad);
 
         this.setupTouchListener();
 
@@ -59,15 +67,13 @@ var InGameSpriteLayer = cc.Layer.extend({
         _ball.checkCollisions(_bricks, _pad);
     
         _ball.update(dt);
+        
     }
 });
 
 var InGameScene = cc.Scene.extend({
     onEnter: function() {
         this._super();
-
-        var backgroundLayer = new cc.LayerColor(new cc.Color(128, 128, 64, 255), cc.winSize.width, cc.winSize.height);
-        this.addChild(backgroundLayer);
 
         var spriteLayer = new InGameSpriteLayer();
         spriteLayer.init();

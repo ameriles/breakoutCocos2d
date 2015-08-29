@@ -5,7 +5,8 @@ var res = {
     YellowBrick_png : "res/YellowBrick.png",
     GreenBrick_png : "res/GreenBrick.png",
     Ball_png : "res/Ball.png",
-    Pad_png : "res/Pad.png"
+    Pad_png : "res/Pad.png",
+    Background_jpg: "res/Background.jpg"
 };
 
 var g_resources = [];

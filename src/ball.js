@@ -4,14 +4,12 @@
 ///////////////////////////////
 var Ball = cc.Class.extend({
     _sprite: null,
-    _speed: 100,
+    _speed: 200,
     _directionX: 1,
     _directionY: 1,
 
     ctor: function(layer) {
         this._sprite = new cc.Sprite(res.Ball_png);
-        this._sprite.setPosition(cc.p(cc.winSize.width / 2, 8 + 16)); // TODO: over the pad
-
         layer.addChild(this._sprite, 0);
     },
 
@@ -72,5 +70,11 @@ var Ball = cc.Class.extend({
 
     increaseSpeed: function() {
         this._speed += 5;
+    },
+    
+    setInitialPosition: function(pad) {
+        // TODO inspeccionar el sprite de pad para obtener las dimensiones del sprite y reemplazar la hardcodeada 16
+        var position = pad.getSprite().getPosition();
+        this._sprite.setPosition(cc.p(cc.winSize.width / 2, position.y + 16));
     }
 });
